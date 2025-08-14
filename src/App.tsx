@@ -4,23 +4,23 @@ import flowlio from './assets/logowithtext.svg'
 
 function App() {
   const [timeLeft, setTimeLeft] = useState({
-    days: 30,
+    days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0
   });
 
-  // Countdown logic
+  // Countdown logic com data fixa
   useEffect(() => {
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 30);
+    // Data específica: 15 de setembro de 2024 às 20:00
+    const targetDate = new Date('2024-09-15T20:00:00').getTime();
 
-    const timer = setInterval(() => {
+    const updateCountdown = () => {
       const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
+      const distance = targetDate - now;
 
       if (distance < 0) {
-        clearInterval(timer);
+        // Countdown terminou
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       } else {
         setTimeLeft({
@@ -30,8 +30,15 @@ function App() {
           seconds: Math.floor((distance % (1000 * 60)) / 1000)
         });
       }
-    }, 1000);
+    };
 
+    // Atualizar imediatamente
+    updateCountdown();
+
+    // Atualizar a cada segundo
+    const timer = setInterval(updateCountdown, 1000);
+
+    // Cleanup
     return () => clearInterval(timer);
   }, []);
 
@@ -77,7 +84,7 @@ function App() {
         {/* Countdown Section - Responsivo */}
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl p-4 sm:p-6 md:p-8 lg:p-12 mb-8 sm:mb-12 border border-gray-100 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl mx-auto">
           <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-6 sm:mb-8 text-center">
-            🚀 Launching in:
+            🚀 Launching on September 15th at 8PM
           </h2>
           
           <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
@@ -93,6 +100,13 @@ function App() {
                 </div>
               </div>
             ))}
+          </div>
+          
+          {/* Data específica do lançamento */}
+          <div className="text-center mt-6 sm:mt-8">
+            <p className="text-sm sm:text-base text-gray-500">
+              Mark your calendars! We can't wait to share this journey with you.
+            </p>
           </div>
         </div>
       
