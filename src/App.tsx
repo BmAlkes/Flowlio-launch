@@ -13,7 +13,7 @@ function App() {
   // Countdown logic com data fixa
   useEffect(() => {
     // Data específica: 15 de setembro de 2024 às 20:00
-    const targetDate = new Date('2024-09-15T20:00:00').getTime();
+    const targetDate = new Date('2025-09-15T20:00:00').getTime();
 
     const updateCountdown = () => {
       const now = new Date().getTime();
